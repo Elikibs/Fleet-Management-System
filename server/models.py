@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.associationproxy import association_proxy
 from datetime import datetime
 
 db = SQLAlchemy()
@@ -16,7 +17,7 @@ class Member(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     matatus = db.relationship('Matatu', back_populates='_member', cascade='all, delete-orphan')
-    routes = db.association_proxy('matatus', '_route',
+    routes = association_proxy('matatus', '_route',
                                     creator=lambda rt: Matatu(route=rt))
 
 
@@ -39,7 +40,7 @@ class Route(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     matatus = db.relationship('Matatu', back_populates='_route', cascade='all, delete-orphan')
-    members = db.association_proxy('matatus', '_member',
+    members = association_proxy('matatus', '_member',
                                   creator=lambda mem: Matatu(member=mem))
 
     def __repr__(self):
