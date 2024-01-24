@@ -1,11 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
 
 db = SQLAlchemy()
 
-class Member(db.Model):
+class Member(db.Model, SerializerMixin):
     __tablename__ = 'members'
+
+    serialize_rules = ('-matatus', '-routes')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, index=True)
@@ -29,8 +32,10 @@ class Member(db.Model):
             f'location = {self.location}, ' + \
             f'contact = +{self.phone})'
     
-class Route(db.Model):
+class Route(db.Model, SerializerMixin):
     __tablename__= 'routes'
+
+    serialize_rules = ('-matatus', '-routes')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, index=True)
@@ -48,7 +53,7 @@ class Route(db.Model):
             f'name = {self.name}, ' + \
             f'price = {self.price})'
 
-class Matatu(db.Model):
+class Matatu(db.Model, SerializerMixin):
     __tablename__= 'matatus'
 
     id = db.Column(db.Integer, primary_key=True)
