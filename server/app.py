@@ -67,9 +67,27 @@ class MemberByID(Resource):
     
     def delete(self, id):
         pass
-    
 api.add_resource(MemberByID, '/members/<int:id>')
 
+class Routes(Resource):
+    def get(self):
+        response_dict_list = [n.to_dict() for n in Route.query.all()]
+        response = make_response(
+            jsonify(response_dict_list), 
+            200,
+        )
+        return response
+api.add_resource(Routes, '/routes')
+
+class Matatus(Resource):
+    def get(self):
+        response_dict_list = [n.to_dict()  for n in Matatu.query.all()]
+        response = make_response(
+            jsonify(response_dict_list),
+            200,
+        )
+        return response
+api.add_resource(Matatus, '/matatus')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
