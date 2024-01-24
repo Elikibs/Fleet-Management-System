@@ -3,14 +3,14 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
-class Member(db.model):
+class Member(db.Model):
     __tablename__ = 'members'
 
-    id = db.Columnn(db.Integer, primary_key=True)
-    name = db.Columnn(db.String, index=True)
-    national_id = db.Columnn(db.Integer)
-    location = db.Colum(db.String)
-    phone = db.Columnn(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, index=True)
+    national_id = db.Column(db.Integer)
+    location = db.Column(db.String)
+    phone = db.Column(db.Integer)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -28,7 +28,7 @@ class Member(db.model):
             f'location = {self.location}, ' + \
             f'contact = +{self.phone})'
     
-class Route(db.model):
+class Route(db.Model):
     __tablename__= 'routes'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -47,7 +47,7 @@ class Route(db.model):
             f'name = {self.name}, ' + \
             f'price = {self.price})'
 
-class Matatu(db.model):
+class Matatu(db.Model):
     __tablename__= 'matatus'
 
     id = db.Column(db.Integer, primary_key=True)
