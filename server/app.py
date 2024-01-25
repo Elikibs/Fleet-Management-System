@@ -105,27 +105,28 @@ class Routes(Resource):
     
     if member:
         def get(self):
+            matatus = Matatu.query.filter_by(member_id=session.get('user_id')).all()
+            matatu_info = []
+            for matatu in matatus:
+                route_id = matatu.route_id
+                route = Route.query.get(route_id)
 
-            response_dict_list = [n.to_dict() for n in Route.query.all()]
+                if route:
+                    name = route.name
+                    price = route.price
+
+                    matatu_info.append({
+                        'route_name': name,
+                        'price': price
+                    })
+                else:
+                    pass
+            
             response = make_response(
-                jsonify(response_dict_list), 
+                jsonify(matatu_info),
                 200,
             )
             return response
-    def post(self):
-        new_route = Route(
-            name=request.form['name'],
-            price=request.form['price'],
-        )
-        db.session.add(new_route)
-        db.session.commit()
-
-        response_dict = new_route.to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            201,
-        )
-        return response
 
 api.add_resource(Routes, '/routes')
 
@@ -146,30 +147,25 @@ class RouteByID(Resource):
 api.add_resource(MemberByID, '/routes/<int:id>')
 
 class Matatus(Resource):
-    def get(self):
-        response_dict_list = [n.to_dict()  for n in Matatu.query.all()]
-        response = make_response(
-            jsonify(response_dict_list),
-            200,
-        )
-        return response
-    def post(self):
-        new_matatu = Matatu(
-            driver_name=request.form['driver_name'],
-            driver_contact=request.form['driver_contact'],
-            number_plate=request.form['number_plate'],
-            capacity=request.form['capacity'],
-            avg_rounds_pd=request.form['avg_rounds_pd'],
-        )
-        db.session.add(new_matatu)
-        db.session.commit()
+    member = Member.query.filter(Member.id == session.get('user_id')).first()
+    if member:
+        def get(self):
+            matatus = Matatu.query.filter_by(member_id=session.get('user_id')).all()
+            matatu_info = []
+            for matatu in matatus:
+                route_id = matatu.route_id
+                route = Route.query.get(route_id)
+                matatu_dict = {
+                    "identity": matatu.number_plate,
+                    "capacity": matatu.capacity,
+                    "route": route.name,
 
-        response_dict = new_matatu.to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            201,
-        )
-        return response
+                }
+                matatu_info.append(matatu_dict)
+            response = make_response(
+                jsonify(matatu_info),
+                200,
+            )
 api.add_resource(Matatus, '/matatus')
 
 class MatatuByID(Resource):
