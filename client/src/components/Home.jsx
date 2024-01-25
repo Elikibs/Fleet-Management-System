@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from './NavBar';
 // import { Carousel } from 'react-bootstrap';
-import Dashboard from './Dashboard';
+import Dashboard from './Dashboard.jsx';
 import Footer from './Footer';
 
 export default function Home() {
