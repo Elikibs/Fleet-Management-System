@@ -177,11 +177,7 @@ class MatatuByID(Resource):
         )
         return response
     
-    def patch(self, id):
-        pass
     
-    def delete(self, id):
-        pass
 api.add_resource(MemberByID, '/matatus/<int:id>')
 
 api.add_resource(Login, '/login')
