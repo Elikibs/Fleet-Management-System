@@ -64,3 +64,345 @@ body {
   font-size: 2rem;
   font-family: "Barlow", sans-serif;
 }
+.containers {
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 5px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  width: 770px;
+  min-width: 800px;
+  min-height: 600px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+  margin-left: 25%;
+}
+.containerr h1{
+  white-space: nowrap;
+}
+.containers p {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  margin: 20px 0;
+  white-space: nowrap;
+  padding-left: 40px;
+}
+
+.containers span {
+  font-size: 12px;
+}
+
+.containers button {
+  background-color: navy;
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.containers button.hidden {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.containers form {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  height: 100%;
+}
+
+.containers input {
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+}
+
+.form-containers {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+.sign-up {
+  left: 50%;
+  width: 50%;
+}
+
+.toggles-containers {
+  position: absolute;
+  top: 0%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+  border-radius: 0 150px 100px 0;
+  z-index: 1;
+  margin-left: 0%;
+}
+
+.toggles {
+  background-color: navy;
+  height: 100%;
+  background: linear-gradient(to right, rgb(56, 56, 109), rgb(64, 64, 209));
+  color: #fff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.toggles-panel {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 70%;
+  text-align: center;
+  top: 0;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+  z-index: 0;
+}
+
+.container.active .toggle-left {
+  transform: translateX(0);
+}
+
+.icons .svg-inline--fa {
+  border: 1px solid #ccc;
+  border-radius: 20%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 3px;
+  width: 20px;
+  height: 20px;
+}
+
+.containerr.sign-in input {
+  width: calc(100% - 20px);
+}
+
+.containerr {
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 5px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  width: 770px;
+  min-width: 800px;
+  min-height: 600px;
+  margin-top: 10%;
+  margin-left: 25%;
+}
+.containerr h1{
+  white-space: nowrap;
+}
+.containerr p {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  margin: 20px 0;
+  white-space: nowrap;
+  padding-right: 60px;
+}
+
+.containerr span {
+  font-size: 12px;
+}
+
+.containerr button {
+  background-color: navy;
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.containerr button.hidden {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.containerr form {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  height: 100%;
+}
+
+.containerr input {
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 130%;
+  outline: none;
+  box-sizing: border-box;
+  margin-left: 50px;
+}
+
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+.toggle-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+  border-radius: 150px 0 0 100px;
+  z-index: 1000;
+}
+
+.toggle {
+  background-color: navy;
+  height: 100%;
+  background: linear-gradient(to right, rgb(56, 56, 109), rgb(64, 64, 209));
+  color: #fff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.toggle-panel {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 80%;
+  text-align: center;
+  top: 0;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+.dashboard{
+  min-height: 90vh;
+  width: 15%;
+  background-color: #BEC0D4;
+}
+.list{
+  padding-top: 50px;
+  list-style: none;
+}
+.list a{
+  text-decoration: none; 
+  color: navy;
+}
+.list a:hover{
+  color: #40A2D8;
+  text-decoration: underline;
+
+}
+.list li{
+  margin-bottom: 30px;
+}
+.display{
+  display: flex;
+}
+.content{
+  padding-left: 5%;
+  padding-top: 50px;
+}
+.text-center{
+  background-color: navy;
+
+}
+.welcome{
+  width: 1400px;
+  border-radius: 50px;
+  height: 300px;
+  background-color: #BEC0D4;
+  padding-left: 40%;
+}
+
+.lists{
+  margin-left: 100px;
+  margin-top: 30px;
+  background-color: #40A2D8;
+  padding: 15px 50px; 
+  width: 1000px;
+  min-height: 60px;
+  border-radius: 50px;
+  display: flex;
+}
+.price{
+  padding-left: 400px; 
+}
+.deleteroute{
+  padding-left: 200px;
+}
+.button{
+  margin-left: 1100px;
+  margin-top: -30px;
+  background-color: navy;
+  color: #BEC0D4;
+  border-radius: 20px;
+  width: 130px;
+  height: 40px;
+}
+.buttons{
+  margin-left: 1250px;
+  margin-top: -40px;
+  background-color: #40A2D8;;
+  color: #BEC0D4;
+  border-radius: 20px;
+  width: 130px;
+  height: 40px;
+}
+.cards{
+  display: flex;
+}
+.form{
+  width: 1200px;
+  padding-left: 50px;
+  margin-left: 50px;
+}
+
+
