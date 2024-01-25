@@ -1,14 +1,16 @@
-import Header from "./Header";
-import Herosection from "./Herosection";
+
 import { Route, Routes } from 'react-router-dom';
+import LangingPage from './LangingPage';
 import "./App.css";
 
 function App() {
   return (
-    <nav>
-      <Header />
-      <Herosection />
-    </nav>
+    <div className='App'>
+      <Routes>
+      <Route path="/" element={<LangingPage/>}/>
+      </Routes>
+
+    </div>
   );
 }
 

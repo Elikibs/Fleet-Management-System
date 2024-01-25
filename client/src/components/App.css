@@ -1,5 +1,7 @@
-* {
+.landingpage{
   background-color: #151b6b;
+  min-height: 10000px;
+  padding-top: -100px;
 }
 
 .header {
