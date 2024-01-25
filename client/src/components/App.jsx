@@ -1,11 +1,12 @@
-import Navbar from "./Navbar";
+import Header from "./Header";
 import Herosection from "./Herosection";
+import { Route, Routes } from 'react-router-dom';
 import "./App.css";
 
 function App() {
   return (
     <nav>
-      <Navbar />
+      <Header />
       <Herosection />
     </nav>
   );
