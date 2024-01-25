@@ -77,6 +77,21 @@ class Routes(Resource):
             200,
         )
         return response
+    def post(self):
+        new_route = Route(
+            name=request.form['name'],
+            price=request.form['price'],
+        )
+        db.session.add(new_route)
+        db.session.commit()
+
+        response_dict = new_route.to_dict()
+        response = make_response(
+            jsonify(response_dict),
+            201,
+        )
+        return response
+
 api.add_resource(Routes, '/routes')
 
 class RouteByID(Resource):
@@ -101,6 +116,23 @@ class Matatus(Resource):
         response = make_response(
             jsonify(response_dict_list),
             200,
+        )
+        return response
+    def post(self):
+        new_matatu = Matatu(
+            driver_name=request.form['driver_name'],
+            driver_contact=request.form['driver_contact'],
+            number_plate=request.form['number_plate'],
+            capacity=request.form['capacity'],
+            avg_rounds_pd=request.form['avg_rounds_pd'],
+        )
+        db.session.add(new_matatu)
+        db.session.commit()
+
+        response_dict = new_matatu.to_dict()
+        response = make_response(
+            jsonify(response_dict),
+            201,
         )
         return response
 api.add_resource(Matatus, '/matatus')
