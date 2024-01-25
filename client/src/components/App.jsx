@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import LangingPage from './LangingPage';
 import Login from './Login';
 import Register from './Register';
+import Home from './Home';
 import "./App.css";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Route path="/" element={<LangingPage/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>}/>
+      <Route path="/home" element={<Home/>}/>
       </Routes>
 
     </div>
