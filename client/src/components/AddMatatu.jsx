@@ -31,27 +31,27 @@ export default function AddMatatu() {
             </FloatingLabel>
             <FloatingLabel label="Route" className='mb-5'>
              <Form.Control type="text" style={{width:'90%'}}
-             name='image'
+             name='route'
              placeholder="Route" />
             </FloatingLabel>
             <FloatingLabel  label="Drivers contact" className='mb-5'>
              <Form.Control type="text" style={{width:'90%'}}
-             name='description' 
+             name='driverscontact' 
              placeholder="Drivers contact" />
             </FloatingLabel>
             <FloatingLabel  label="Number Plate" className='mb-5'>
              <Form.Control type="text" style={{width:'90%'}}
-             name='material'
+             name='numerplate'
              placeholder="Number Plate" />
             </FloatingLabel>
             <FloatingLabel  label="Capacity" className='mb-5'>
              <Form.Control type="text" style={{width:'90%'}}
-             name='price' 
+             name='capacity' 
              placeholder="Capacity" />
             </FloatingLabel>
             <FloatingLabel  label="Trips" className='mb-5'>
              <Form.Control type="text" style={{width:'90%'}}
-             name='price' 
+             name='trips' 
              placeholder="Trips" />
             </FloatingLabel>
             <Button variant="secondary" onClick={handleMatatu}style={{backgroundColor:"navy", marginBottom:"50px",marginLeft:'500px'}}>Add Matatu</Button>
