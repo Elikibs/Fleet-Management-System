@@ -9,7 +9,7 @@ function Herosection() {
           Manage Your Fleet Like a Pro with <br />{" "}
           <span className="fleetsense">FleetSense!</span>
         </p>
-        <p>The ultimate solution that allows you to manage your vehicles</p>
+        <p>The best solution that allows you to manage your vehicles</p>
 
         <button className="sign-in-button">Sign in</button>
       </div>
