@@ -1,7 +1,21 @@
 .landingpage{
   background-color: #151b6b;
-  min-height: 10000px;
-  padding-top: -100px;
+  min-height: 1000px;
+}
+.App {
+  box-sizing: border-box;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+
+body {
+  background-color: rgb(142, 181, 214);
+  background: linear-gradient(to right, #e2e2e2, #c0d6ff);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .header {
