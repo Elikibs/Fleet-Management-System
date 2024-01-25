@@ -79,6 +79,22 @@ class Routes(Resource):
         return response
 api.add_resource(Routes, '/routes')
 
+class RouteByID(Resource):
+    def get(self, id):
+        response_dict = Route.query.filter_by(id=id).first().to_dict()
+        response = make_response(
+            jsonify(response_dict),
+            200,
+        )
+        return response
+    
+    def patch(self, id):
+        pass
+    
+    def delete(self, id):
+        pass
+api.add_resource(MemberByID, '/routes/<int:id>')
+
 class Matatus(Resource):
     def get(self):
         response_dict_list = [n.to_dict()  for n in Matatu.query.all()]
@@ -88,6 +104,22 @@ class Matatus(Resource):
         )
         return response
 api.add_resource(Matatus, '/matatus')
+
+class MatatuByID(Resource):
+    def get(self, id):
+        response_dict = Matatu.query.filter_by(id=id).first().to_dict()
+        response = make_response(
+            jsonify(response_dict),
+            200,
+        )
+        return response
+    
+    def patch(self, id):
+        pass
+    
+    def delete(self, id):
+        pass
+api.add_resource(MemberByID, '/matatus/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
