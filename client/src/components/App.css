@@ -405,4 +405,12 @@ body {
   margin-left: 50px;
 }
 
+h1 {
+  text-align:centre;
+}
+
+h2 {
+  text-align: left;
+  margin-left: -20px; /* Adjust this value as needed for desired spacing */
+}
 
