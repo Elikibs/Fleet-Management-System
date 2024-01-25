@@ -4,6 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import Home from './Home';
 import Members from './Members';
+import MatatuRoutes from './MatatuRoutes';
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Route path="/register" element={<Register/>}/>
       <Route path="/home" element={<Home/>}/>
       <Route path="/members" element={<Members/>}/>
+      <Route path="/matatu_routes" element={<MatatuRoutes/>}/>
 
       </Routes>
 
