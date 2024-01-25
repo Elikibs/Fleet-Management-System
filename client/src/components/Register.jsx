@@ -8,7 +8,7 @@ export default function Register() {
 
     function handleClick(){
         console.log("yoo")
-        navigate("/")
+        navigate("/login")
     }
   return (
     <div className='containers'>
