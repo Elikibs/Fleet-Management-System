@@ -1,9 +1,10 @@
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, make_response, jsonify, session
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 from models import db, Member, Route, Matatu
 
 app = Flask(__name__)
+app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fleets.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
@@ -23,6 +24,36 @@ class Index(Resource):
         )
         return response
 api.add_resource(Index, '/')
+
+# Login endpoint
+class Login(Resource):
+    def post(self):
+        member = Member.query.filter(Member.name == request.get_json()['name']).first()
+        
+        if member:
+            session['user_id'] = member.id
+            return make_response(jsonify(member.to_dict()), 200)
+        else:
+            return make_response(jsonify({"error": "User not found"}), 404)
+
+
+# Logout endpoint
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return make_response(jsonify({'message': '204: No Content'}), 204)
+
+# Checking session endpoint
+class CheckSession(Resource):
+    def get(self):
+        
+        user = Member.query.filter(Member.id == session.get('user_id')).first()
+        
+        if user:
+            return make_response(jsonify(user.to_dict()),200)
+        else:
+            return make_response(jsonify({}), 401)
+
 
 class Members(Resource):
     def get(self):
@@ -70,13 +101,17 @@ class MemberByID(Resource):
 api.add_resource(MemberByID, '/members/<int:id>')
 
 class Routes(Resource):
-    def get(self):
-        response_dict_list = [n.to_dict() for n in Route.query.all()]
-        response = make_response(
-            jsonify(response_dict_list), 
-            200,
-        )
-        return response
+    member = Member.query.filter(Member.id == session.get('user_id')).first()
+    
+    if member:
+        def get(self):
+
+            response_dict_list = [n.to_dict() for n in Route.query.all()]
+            response = make_response(
+                jsonify(response_dict_list), 
+                200,
+            )
+            return response
     def post(self):
         new_route = Route(
             name=request.form['name'],
@@ -152,6 +187,10 @@ class MatatuByID(Resource):
     def delete(self, id):
         pass
 api.add_resource(MemberByID, '/matatus/<int:id>')
+
+api.add_resource(Login, '/login')
+api.add_resource(Logout, '/logout')
+api.add_resource(CheckSession, '/check_session')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
