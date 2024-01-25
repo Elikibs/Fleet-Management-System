@@ -3,6 +3,7 @@ import LangingPage from './LangingPage';
 import Login from './Login';
 import Register from './Register';
 import Home from './Home';
+import Members from './Members';
 import "./App.css";
 
 function App() {
@@ -13,6 +14,8 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>}/>
       <Route path="/home" element={<Home/>}/>
+      <Route path="/members" element={<Members/>}/>
+
       </Routes>
 
     </div>
