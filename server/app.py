@@ -100,6 +100,7 @@ class MemberByID(Resource):
         pass
 api.add_resource(MemberByID, '/members/<int:id>')
 
+# Routes associated with member
 class Routes(Resource):
     member = Member.query.filter(Member.id == session.get('user_id')).first()
     
