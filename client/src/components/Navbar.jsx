@@ -1,9 +1,13 @@
-function Navbar() {
-    return (
-      <div className="Navbar">
-        <div className="container mt-5 header">FleetSense</div>
-      </div>
-    );
-  }
-  
-  export default Navbar;
+import React from 'react';
+import Header from "./Header";
+import Herosection from "./Herosection";
+
+export default function LangingPage() {
+  return (
+    <div className='landingpage'>
+      <Header />
+      <Herosection />
+    </div>
+    
+  )
+}
