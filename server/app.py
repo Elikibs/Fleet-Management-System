@@ -83,7 +83,7 @@ class Members(Resource):
     
 api.add_resource(Members, '/members')
 
-# Retrieving single records
+# Retrieving single record
 class MemberByID(Resource):
     def get(self, id):
         response_dict = Member.query.filter_by(id=id).first().to_dict()
