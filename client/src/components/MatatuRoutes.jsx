@@ -20,6 +20,24 @@ export default function MatatuRoutes() {
 //     .then((r) => r.json())
 //     .then((data) => setRestaurants(data))
 // },[]);
+// function handleAddRoutes(newRoute){
+  //   setRoute([...route,newRoute])
+  // }
+//   const handleDeleteRoute = (routeId) => {
+//     fetch(`/api/matatus/${routeId}`, {
+//         method: 'DELETE'
+//     })
+//     .then(response => {
+//         if (response.ok) {
+//             console.log('Matatu deleted successfully');
+//         } else {
+//             console.error('Failed to delete matatu');
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error deleting matatu:', error);
+//     });
+// };
 
   const hideModal = () => setModalShow(false);
 
@@ -60,6 +78,7 @@ export default function MatatuRoutes() {
           </ul>
         </div>
       </div>
+      {/* pass handleroutes prop */}
       <AddRoute show={modalShow} onHide={hideModal} onAddRoute={handleAddRoute} />
       <Footer />
     </div>
