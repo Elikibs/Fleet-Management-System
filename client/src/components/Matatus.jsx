@@ -1,21 +1,40 @@
 import React from 'react'
 import NavBar from './NavBar'
 import Dashboard from './Dashboard'
+import { useState } from 'react'
 import Footer from './Footer'
 import { Table } from 'react-bootstrap'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import EditMatatu from './EditMatatu'
 
+//matatu prop
 export default function Matatus() {
     const navigate= useNavigate()
-    // const [matatus, setMatatus] = useState([])
-  //   useEffect(()=> {
-  //     fetch('https://pizza-restaurant-buse.onrender.com/restaurants')
-  //     .then((r) => r.json())
-  //     .then((data) => setMatatus(data))
-  // },[]);
+    const [modalShow, setModalShow] = useState(false);
+    const hideModal = () => setModalShow(false);
+    const toggleModal = () => setModalShow(!modalShow);
+    const handleAddRoute = (event) => {
+      event.preventDefault();
+      toggleModal();
+    };
+    const handleDeleteMatatu = (matatuId) => {
+      fetch(`/api/matatus/${matatuId}`, {
+          method: 'DELETE'
+      })
+      .then(response => {
+          if (response.ok) {
+              console.log('Matatu deleted successfully');
+          } else {
+              console.error('Failed to delete matatu');
+          }
+      })
+      .catch(error => {
+          console.error('Error deleting matatu:', error);
+      });
+  };
 
     function addMatatu(){
         navigate("/add_matatu")
@@ -46,32 +65,21 @@ export default function Matatus() {
                 <td>KCB 490B</td>
                 <td>KCB 490B</td>
                 <td>
-                  <FontAwesomeIcon icon={faPen} style={{color:'#40A2D8'}}/>
+                  <FontAwesomeIcon icon={faPen} style={{color:'#40A2D8'}} onClick={toggleModal}/>
                 </td>
                 <td>
-                  <FontAwesomeIcon icon={faTrashCan} style={{color:'#40A2D8'}}/>
-                </td>
-            </tr>
-            <tr>
-                <td>KCB 490B</td>
-                <td>KCB 490B</td>
-                <td>KCB 490B</td>
-                <td>
-                  <FontAwesomeIcon icon={faPen} style={{color:'#40A2D8'}}/>
-                </td>
-                <td>
-                  <FontAwesomeIcon icon={faTrashCan} style={{color:'#40A2D8'}}/>
+                  <FontAwesomeIcon icon={faTrashCan} style={{color:'#40A2D8'}} onClick={handleDeleteMatatu}/>
                 </td>
             </tr>
             <tr>
-               <td>KCB 490B</td>
+                <td>KCB 490B</td>
                 <td>KCB 490B</td>
                 <td>KCB 490B</td>
                 <td>
-                  <FontAwesomeIcon icon={faPen} style={{color:'#40A2D8'}} />
+                  <FontAwesomeIcon icon={faPen} style={{color:'#40A2D8'}}onClick={toggleModal}/>
                 </td>
                 <td>
-                  <FontAwesomeIcon icon={faTrashCan} style={{color:'#40A2D8'}}/>
+                  <FontAwesomeIcon icon={faTrashCan} style={{color:'#40A2D8'}} onClick={handleDeleteMatatu}/>
                 </td>
             </tr>
             <tr>
@@ -79,16 +87,28 @@ export default function Matatus() {
                 <td>KCB 490B</td>
                 <td>KCB 490B</td>
                 <td>
-                  <FontAwesomeIcon icon={faPen} style={{color:'#40A2D8'}}/>
+                  <FontAwesomeIcon icon={faPen} style={{color:'#40A2D8'}} onClick={toggleModal} />
                 </td>
                 <td>
-                  <FontAwesomeIcon icon={faTrashCan} style={{color:'#40A2D8'}}/>
+                  <FontAwesomeIcon icon={faTrashCan} style={{color:'#40A2D8'}} onClick={handleDeleteMatatu}/>
+                </td>
+            </tr>
+            <tr>
+               <td>KCB 490B</td>
+                <td>KCB 490B</td>
+                <td>KCB 490B</td>
+                <td>
+                  <FontAwesomeIcon icon={faPen} style={{color:'#40A2D8'}} onClick={toggleModal}/>
+                </td>
+                <td>
+                  <FontAwesomeIcon icon={faTrashCan} style={{color:'#40A2D8'}} onClick={handleDeleteMatatu}/>
                 </td>
             </tr>
           </tbody>
         </Table>
       </div>
       </div>
+      <EditMatatu show={modalShow} onHide={hideModal} onAddRoute={handleAddRoute} />
      <Footer/>
     </div>
   )
