@@ -10,6 +10,17 @@ import AddMatatu from './AddMatatu';
 import "./App.css";
 
 function App() {
+  // fetch matatus
+  //  const [matatus, setMatatus] = useState([])
+  //   useEffect(()=> {
+  //     fetch('https://pizza-restaurant-buse.onrender.com/restaurants')
+  //     .then((r) => r.json())
+  //     .then((data) => setMatatus(data))
+  // },[]);
+
+  // function handleAddMatatu(newMatatu){
+  //   setMatatus([...matatus,newMatatu])
+  // }
   return (
     <div className='App'>
       <Routes>
@@ -19,7 +30,9 @@ function App() {
       <Route path="/home" element={<Home/>}/>
       <Route path="/members" element={<Members/>}/>
       <Route path="/matatu_routes" element={<MatatuRoutes/>}/>
-      <Route path="/matatus" element={<Matatus/>}/>
+      {/* pass matatu as a prop */}
+      <Route path="/matatus" element={<Matatus/>}/> 
+      {/* pass prop handleAddMatatu */}
       <Route path="/add_matatu" element={<AddMatatu/>}/>
 
       </Routes>
