@@ -49,10 +49,8 @@ const handleDeleteMatatu = (id) => {
       <Route path="/home" element={<Home/>}/>
       <Route path="/members" element={<Members/>}/>
       <Route path="/matatu_routes" element={<MatatuRoutes/>}/>
-      {/* pass matatu as a prop */}
       <Route path="/matatus" element={<Matatus/>}/> 
-      {/* pass prop handleAddMatatu */}
-      <Route path="/add_matatu" element={<AddMatatu/>}/>
+      <Route path="/add_matatu" element={<AddMatatu handleAddMatatu={handleAddMatatu}/>}/>
 
       </Routes>
 
