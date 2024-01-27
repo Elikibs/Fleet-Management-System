@@ -56,64 +56,71 @@ export default function AddMatatu() {
 
        navigate("/matatus")
     }
-  return (
-    <div>
-      <NavBar/>
-      <div className='display'>
-      <Dashboard/>
-      <div className='content'>
-        <h1>Add Matatu</h1>
-        <div>
-        <div>
-            <br></br>
-            <div className='form' style={{borderRadius:"50px", backgroundColor:"#BEC0D4"}}>
-                <br></br>
-                <br></br>
-            <FloatingLabel label="Name" className='mb-5'>
-             <Form.Control type="text" style={{width:'90%'}}
-             name='name'
-            //  onChange={handleInput}
-             placeholder="Name" />
-            </FloatingLabel>
-            <FloatingLabel label="Route" className='mb-5'>
-             <Form.Control type="text" style={{width:'90%'}}
-             name='route'
-             //  onChange={handleInput}
-             placeholder="Route" />
-            </FloatingLabel>
-            <FloatingLabel  label="Drivers contact" className='mb-5'>
-             <Form.Control type="text" style={{width:'90%'}}
-             name='driverscontact' 
-             //  onChange={handleInput}
-             placeholder="Drivers contact" />
-            </FloatingLabel>
-            <FloatingLabel  label="Number Plate" className='mb-5'>
-             <Form.Control type="text" style={{width:'90%'}}
-             name='numberplate'
-             //  onChange={handleInput}
-             placeholder="Number Plate" />
-            </FloatingLabel>
-            <FloatingLabel  label="Capacity" className='mb-5'>
-             <Form.Control type="text" style={{width:'90%'}}
-             name='capacity' 
-             //  onChange={handleInput}
-             placeholder="Capacity" />
-            </FloatingLabel>
-            <FloatingLabel  label="Trips" className='mb-5'>
-             <Form.Control type="text" style={{width:'90%'}}
-             name='trips' 
-             //  onChange={handleInput}
-             placeholder="Trips" />
-            </FloatingLabel>
-            <Button variant="secondary" onClick={handleMatatu}style={{backgroundColor:"navy", marginBottom:"50px",marginLeft:'500px'}}>Add Matatu</Button>
-
-            </div>
-            <br></br>
-         </div>
-    </div>
+    return (
+      <div>
+        <NavBar/>
+        <div className='display'>
+        <Dashboard/>
+        <div className='content'>
+          <h1>Add Matatu</h1>
+          <div>
+          <div>
+              <br></br>
+              <div className='form' style={{borderRadius:"50px", backgroundColor:"#BEC0D4"}}>
+                  <br></br>
+                  <br></br>
+              <FloatingLabel label="Name" className='mb-5'>
+               <Form.Control type="text" style={{width:'90%'}}
+               name='drivers_name'
+               onChange={handleInput}
+               value={input.drivers_name}
+               placeholder="Name" />
+              </FloatingLabel>
+              <FloatingLabel label="Route" className='mb-5'>
+               <Form.Control type="text" style={{width:'90%'}}
+               name='route_id'
+               onChange={handleInput}
+               value={input.route_id}
+               placeholder="Route" />
+              </FloatingLabel>
+              <FloatingLabel  label="Drivers contact" className='mb-5'>
+               <Form.Control type="text" style={{width:'90%'}}
+               name='drivers_contact' 
+               onChange={handleInput}
+               value={input.drivers_contact}
+               placeholder="Drivers contact" />
+              </FloatingLabel>
+              <FloatingLabel  label="Number Plate" className='mb-5'>
+               <Form.Control type="text" style={{width:'90%'}}
+               name='number_plate'
+               onChange={handleInput}
+               value={input.number_plate}
+               placeholder="Number Plate" />
+              </FloatingLabel>
+              <FloatingLabel  label="Capacity" className='mb-5'>
+               <Form.Control type="text" style={{width:'90%'}}
+               name='capacity' 
+               onChange={handleInput}
+               value={input.capacity}
+               placeholder="Capacity" />
+              </FloatingLabel>
+              <FloatingLabel  label="Trips" className='mb-5'>
+               <Form.Control type="text" style={{width:'90%'}}
+               name='trips' 
+               onChange={handleInput}
+               value={input.trips}
+               placeholder="Trips" />
+              </FloatingLabel>
+              <Button variant="secondary" onClick={handleMatatu}style={{backgroundColor:"navy", marginBottom:"50px",marginLeft:'500px'}}>Add Matatu</Button>
+  
+              </div>
+              <br></br>
+           </div>
       </div>
+        </div>
+        </div>
+        <Footer/>
       </div>
-      <Footer/>
-    </div>
-  )
-}
+    )
+  }
+  
