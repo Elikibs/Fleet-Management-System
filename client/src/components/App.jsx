@@ -12,12 +12,12 @@ import "./App.css";
 
 function App() {
   // fetch matatus
-  //  const [matatus, setMatatus] = useState([])
-  //   useEffect(()=> {
-  //     fetch('https://pizza-restaurant-buse.onrender.com/restaurants')
-  //     .then((r) => r.json())
-  //     .then((data) => setMatatus(data))
-  // },[]);
+  const [matatus, setMatatus] = useState([])
+  useEffect(()=> {
+    fetch("http://localhost:3000/matatus")
+    .then((r) => r.json())
+    .then((data) => setMatatus(data))
+},[]);
 
   // function handleAddMatatu(newMatatu){
   //   setMatatus([...matatus,newMatatu])
