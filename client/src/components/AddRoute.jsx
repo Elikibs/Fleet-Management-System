@@ -2,40 +2,43 @@ import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 
-export default function AddRoute({ show, onHide, onAddRoute }) {
+// pass handleAddRoutes as a prop
+export default function AddRoute({ show, onHide, onAddRoute, handleAddRoutes }) {
+
   const [input, setInput]= useState({
-    name:'',
-    price:''
- })
- const handleInputChange = (e) =>{
-   const { name, value } = e.target;
-     setInput({
-        ...input,
-        [name]: value
-      });
- }
- function handleSubmit(e){
-   e.preventDefault();
-   const item= {
-      name:input.name,
-      price:input.price
-   };
-   fetch("http://localhost:3000/routes" ,{
-     method: "POST",
-     headers:{
-       "Content-Type": "application/json"
-     },
-     body: JSON.stringify(item),
-   })
-   .then((r) => r.json())
-   .then((newMatatu) => handleAddRoutes(newMatatu))
-   setInput({
      name:'',
      price:''
-   })
+  })
+  const handleInputChange = (e) =>{
+    const { name, value } = e.target;
+      setInput({
+         ...input,
+         [name]: value
+       });
+  }
+  function handleSubmit(e){
+    e.preventDefault();
+    const item= {
+       name:input.name,
+       price:input.price
+    };
+    fetch("http://localhost:3000/routes" ,{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(item),
+    })
+    .then((r) => r.json())
+    .then((newMatatu) => handleAddRoutes(newMatatu))
+    setInput({
+      name:'',
+      price:''
+    })
 
-   onHide();
- }
+    onHide();
+  }
+
 
   return (
     <Modal show={show} onHide={onHide} size="lg">

@@ -349,6 +349,7 @@ body {
 .content{
   padding-left: 5%;
   padding-top: 50px;
+  flex-wrap: wrap;
 }
 .text-center{
   background-color: navy;
@@ -419,7 +420,7 @@ h2 {
   justify-content:flex-start;
   gap: 20px;
   padding: 10px;
-  margin-right: 30px;
+  margin-right: 20px;
 }
 
 .member-card {
@@ -442,6 +443,19 @@ h2 {
 .member-link:hover {
   text-decoration: underline;
   color: #40A2D8;
+}
+.home-cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 40px;
+  padding: 10px;
+  margin-right: 20px;
+
+}
+.cardcontainer{
+  margin-top: 100px;
+  padding-left: 15%;
 }
 
 
