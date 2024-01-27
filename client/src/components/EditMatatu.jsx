@@ -1,85 +1,87 @@
-// import { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import React,{useEffect, useState} from 'react'
+import NavBar from './NavBar';
+import Dashboard from './Dashboard';
+import Footer from './Footer';
+import { useParams } from 'react-router-dom';
+import { Button,FloatingLabel, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-// pass handleAddRoutes as a prop
-export default function EditMatatu({ show, onHide, onAddRoute }) {
-  // const [input, setInput]= useState({
-  //    routename:'',
-  //    routeprice:''
-  // })
-  // const handleInputChange = (e) =>{
-  //   const { name, value } = e.target;
-  //     setInput({
-  //        ...input,
-  //        [name]: value
-  //      });
-  // }
-  // function handleSubmit(e){
-  //   // e.preventDefault();
-  //   //const formData = new FormData
-  //   //const capacity = formData.get('capacity')
-  //   //const operationRoute = formData.get('operation_route')
-  //   // const data ={
-  //   //   capacity: capacity,
-  //  //   operatioRoute: operatioRoute
-  //   //  }
-  //   // fetch("/matatus/${matatuId}" ,{
-  //   //   method: "PATCH",
-  //   //   headers:{
-  //   //     "Content-Type": "application/json"
-  //   //   },
-  //   //   body: JSON.stringify(data)
-  //   // })
-  //   // .then((r) => r.json())
-  //   // .then(updatedMatatu => {
-  //   //  console.log("Matatu updated:", updatedMatatu)
-  //   // onHide();
-  //   // })
-  //   // setInput({
-  //     // routename:'',
-  //     // routeprice:''
-  //   // })
+function EditMatatu() {
+  const navigate = useNavigate()
+  const {id}= useParams();
+  const [input, setInput] = useState({
+    id : id,
+    capacity: '',
+    route_id:''
+  })
+  const handleInputChange = (e) =>{
+    const { name, value } = e.target;
+      setInput({
+         ...input,
+         [name]: value
+       });
+  } 
+  useEffect(()=> {
+    fetch(`http://localhost:3000/matatus/${id}`)
+    .then((r) => r.json())
+    .then((data) => setInput(data))
+},[id]);
 
-  //    navigate("/matatu_routes")
-  // }
-
-
+   const handleSubmit= (e) =>{
+    e.preventDefault();
+    fetch(`http://localhost:3000/matatus/${id}`,{
+      method:'PATCH',
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(input)
+    })
+    .then(response => {
+      if (response.ok){
+        navigate("/matatus")
+      }
+    })
+    .catch(err => console.log(err))
+   }
   return (
-    <Modal show={show} onHide={onHide} size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title>Edit Matatu Details</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {/* Add your form elements here */}
-        <Form onSubmit={onAddRoute}>
-          <Form.Group controlId='routeName'>
-            <Form.Label>Capacity</Form.Label>
-            <Form.Control 
-            type='text' 
-            placeholder='Enter capacity'
-            name='capacity' 
-            // value={input.routename}
-            />
-          </Form.Group>
-          <Form.Group controlId='routePrice'>
-            <Form.Label>Operation</Form.Label>
-            <Form.Control 
-            type='text' 
-            placeholder='Enter operation route'
-            name='operation route'
-            // value={input.routeprice}
-             />
-          </Form.Group>
-          <Button 
-          variant='primary' 
-          type='submit' 
-          style={{color:'white', background:'#40A2D8',marginTop:'30px'}}
-          >
-            Edit Matatu
-          </Button>
-        </Form>
-      </Modal.Body>
-    </Modal>
-  );
+    <div>
+      <NavBar />
+      <div className='display'>
+        <Dashboard />
+        <div className='content'>
+          <h1>Edit Matatu</h1>
+          <div>
+        <div>
+            <br></br>
+            <div className='form' style={{borderRadius:"50px", backgroundColor:"#BEC0D4"}}>
+                <br></br>
+                <br></br>
+            <FloatingLabel label="Capacity" className='mb-5'>
+             <Form.Control type="number" style={{width:'90%'}}
+             name='capacity'
+             value = {input.capacity}
+             onChange={handleInputChange}
+             placeholder="Name" />
+            </FloatingLabel>
+            <FloatingLabel label="Operation Route" className='mb-5'>
+             <Form.Control type="number" style={{width:'90%'}}
+             name='route_id'
+             value= {input.route_id}
+             onChange={handleInputChange}
+             placeholder="route_id" />
+            </FloatingLabel>
+            <Button variant="secondary" onClick={handleSubmit} style={{backgroundColor:"navy", marginBottom:"50px",marginLeft:'500px'}}>Edit Matatu</Button>
+
+            </div>
+            <br></br>
+         </div>
+         </div>
+         
+        </div>
+        </div>
+      <Footer/>
+    </div>
+  )
 }
-// onClick={handleSubmit}
+
+export default EditMatatu
