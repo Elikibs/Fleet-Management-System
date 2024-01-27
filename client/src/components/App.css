@@ -413,4 +413,37 @@ h2 {
   text-align: left;
   margin-left: -230px; /* Adjust this value as needed for desired spacing */
 }
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+  gap: 20px;
+  padding: 10px;
+  margin-right: 30px;
+}
+
+.member-card {
+  width: 18rem;
+  border-radius: 20px;
+  padding: 20px; /* Adjust the padding to increase the height */
+  margin-bottom: 20px
+}
+
+.member-img {
+  height: 120px;
+  width: 90px;
+}
+
+.member-link {
+  text-decoration: none;
+  color: navy;
+}
+
+.member-link:hover {
+  text-decoration: underline;
+  color: #40A2D8;
+}
+
+
+
 
