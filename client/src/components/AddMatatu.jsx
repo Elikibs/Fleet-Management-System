@@ -8,51 +8,51 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AddMatatu() {
     const navigate= useNavigate()
-    // const[input, setInput] = useState({
-    //   name :'',
-    //   route:'',
-    //   driverscontact:'',
-    //   numberplate: '',
-    //   capacity:'',
-    //   trips:''
-    // })
-  //   const handleInput = (e)=>{
-  //     const { name, value } = e.target;
-  //     setInput({
-  //       ...input,
-  //       [name]: value
-  //     });
+    const[input, setInput] = useState({
+      drivers_name : " ",
+      route_id: " ",
+      drivers_contact:" ",
+      number_plate: " ",
+      capacity: " ",
+      trips: " ",
+  })
+  const handleInput = (e)=>{
+    const { name, value } = e.target;
+    setInput({
+      ...input,
+      [name]: value
+    });
 
-  // }
+}
 // handleAddMatatu
     function handleMatatu(e){
-      // e.preventDefault();
-      // const item= {
-      //   name : input.name,
-      //   route: input.route,
-      //   driverscontact:input.driverscontact,
-      //   numberplate: input.numberplate,
-      //   capacity: input.capacity,
-      //   trips: input.trips,
-      // };
-      // fetch("/add_matatu" ,{
-      //   method: "POST",
-      //   headers:{
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify(item),
-      // })
-      // .then((r) => r.json())
-      // .then((newMatatu) => handleAddMatatu(newMatatu))
-      // setInput({
-      //   name :'',
-      // route:'',
-      // driverscontact:'',
-      // numberplate: '',
-      // capacity:'',
-      // trips:''
+      e.preventDefault();
+      const item= {
+        drivers_name : input.drivers_name,
+        route_id: input.route_id,
+        drivers_contact:input.drivers_contact,
+        number_plate: input.number_plate,
+        capacity: input.capacity,
+        trips: input.trips,
+      };
+      fetch("http://localhost:3000/matatus" ,{
+        method: "POST",
+        headers:{
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(item),
+      })
+      .then((r) => r.json())
+      .then((newMatatu) => handleAddMatatu(newMatatu))
+      setInput({
+        drivers_name : " ",
+        route_id: " ",
+        drivers_contact:" ",
+        number_plate: " ",
+        capacity: " ",
+        trips: " ",
 
-      // })
+      })
 
        navigate("/matatus")
     }
