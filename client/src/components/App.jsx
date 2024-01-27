@@ -19,6 +19,22 @@ function App() {
     .then((data) => setMatatus(data))
 },[]);
 
+const handleDeleteMatatu = (id) => {
+  fetch(`http://localhost:3000/matatus/${id}`, {
+      method: 'DELETE'
+  })
+  .then(response => {
+      if (response.ok) {
+          setMatatus((prevmatatu) => prevmatatu.filter((matatu) => matatu.id !== id))
+      } else {
+          console.error('Failed to delete matatu');
+      }
+  })
+  .catch(error => {
+      console.error('Error deleting matatu:', error);
+  });
+};
+
   // function handleAddMatatu(newMatatu){
   //   setMatatus([...matatus,newMatatu])
   // }
