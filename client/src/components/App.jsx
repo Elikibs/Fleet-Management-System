@@ -19,6 +19,7 @@ function App() {
     .then((data) => setMatatus(data))
 },[]);
 
+//function to delete matatus
 const handleDeleteMatatu = (id) => {
   fetch(`http://localhost:3000/matatus/${id}`, {
       method: 'DELETE'
@@ -35,9 +36,10 @@ const handleDeleteMatatu = (id) => {
   });
 };
 
-  // function handleAddMatatu(newMatatu){
-  //   setMatatus([...matatus,newMatatu])
-  // }
+//add matatus 
+  function handleAddMatatu(newMatatu){
+    setMatatus([...matatus,newMatatu])
+  }
   return (
     <div className='App'>
       <Routes>
