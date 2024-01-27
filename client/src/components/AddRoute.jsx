@@ -1,42 +1,41 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-// pass handleAddRoutes as a prop
+
 export default function AddRoute({ show, onHide, onAddRoute }) {
-  // const [input, setInput]= useState({
-  //    routename:'',
-  //    routeprice:''
-  // })
-  // const handleInputChange = (e) =>{
-  //   const { name, value } = e.target;
-  //     setInput({
-  //        ...input,
-  //        [name]: value
-  //      });
-  // }
-  // function handleSubmit(e){
-  //   // e.preventDefault();
-  //   // const item= {
-  //     //  routename:input.routename,
-  //     //  routeprice:input.routeprice
-  //   // };
-  //   // fetch("/add_route" ,{
-  //   //   method: "POST",
-  //   //   headers:{
-  //   //     "Content-Type": "application/json"
-  //   //   },
-  //   //   body: JSON.stringify(item),
-  //   // })
-  //   // .then((r) => r.json())
-  //   // .then((newMatatu) => handleAddRoutes(newMatatu))
-  //   // setInput({
-  //     // routename:'',
-  //     // routeprice:''
-  //   // })
+  const [input, setInput]= useState({
+    name:'',
+    price:''
+ })
+ const handleInputChange = (e) =>{
+   const { name, value } = e.target;
+     setInput({
+        ...input,
+        [name]: value
+      });
+ }
+ function handleSubmit(e){
+   e.preventDefault();
+   const item= {
+      name:input.name,
+      price:input.price
+   };
+   fetch("http://localhost:3000/routes" ,{
+     method: "POST",
+     headers:{
+       "Content-Type": "application/json"
+     },
+     body: JSON.stringify(item),
+   })
+   .then((r) => r.json())
+   .then((newMatatu) => handleAddRoutes(newMatatu))
+   setInput({
+     name:'',
+     price:''
+   })
 
-  //    navigate("/matatu_routes")
-  // }
-
+   onHide();
+ }
 
   return (
     <Modal show={show} onHide={onHide} size="lg">
@@ -51,8 +50,9 @@ export default function AddRoute({ show, onHide, onAddRoute }) {
             <Form.Control 
             type='text' 
             placeholder='Enter route name'
-            name='routename' 
-            // value={input.routename}
+            name='name' 
+            value={input.name}
+            onChange={handleInputChange}
             />
           </Form.Group>
           <Form.Group controlId='routePrice'>
@@ -60,11 +60,12 @@ export default function AddRoute({ show, onHide, onAddRoute }) {
             <Form.Control 
             type='number' 
             placeholder='Enter route price'
-            name='routeprice'
-            // value={input.routeprice}
+            name='price'
+            value={input.price}
+            onChange={handleInputChange}
              />
           </Form.Group>
-          <Button 
+          <Button onClick={handleSubmit} 
           variant='primary' 
           type='submit' 
           style={{color:'white', background:'#40A2D8',marginTop:'30px'}}
@@ -76,4 +77,3 @@ export default function AddRoute({ show, onHide, onAddRoute }) {
     </Modal>
   );
 }
-// onClick={handleSubmit}
