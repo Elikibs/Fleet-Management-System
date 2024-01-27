@@ -1,0 +1,256 @@
+{
+    "members": [
+      {
+        "id": "1",
+        "name": "John Doe",
+        "national_id": 1234567890,
+        "location": "City",
+        "phone": 1234567890,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          1,
+          2,
+          3
+        ],
+        "routes": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": "2",
+        "name": "Jane Doe",
+        "national_id": 1239967890,
+        "location": "Town",
+        "phone": 9876543210,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          4,
+          5
+        ],
+        "routes": [
+          4,
+          5
+        ]
+      },
+      {
+        "id": "3",
+        "name": "Alice Smith",
+        "national_id": 1122334455,
+        "location": "Village",
+        "phone": 5555555555,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          6,
+          7
+        ],
+        "routes": [
+          6,
+          7
+        ]
+      },
+      {
+        "id": "4",
+        "name": "Bob Johnson",
+        "national_id": 6677889900,
+        "location": "Suburb",
+        "phone": 9999999999,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          8
+        ],
+        "routes": [
+          8
+        ]
+      },
+      {
+        "id": "5",
+        "name": "Mary Brown",
+        "national_id": 1122112233,
+        "location": "Town",
+        "phone": 6666666666,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          9,
+          10
+        ],
+        "routes": [
+          9,
+          10
+        ]
+      },
+      {
+        "id": "6",
+        "name": "Michael Wilson",
+        "national_id": 3344556677,
+        "location": "City",
+        "phone": 7777777777,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          11,
+          12
+        ],
+        "routes": [
+          11,
+          12
+        ]
+      },
+      {
+        "id": "7",
+        "name": "Emily Davis",
+        "national_id": 8899001122,
+        "location": "Village",
+        "phone": 8888888888,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          13
+        ],
+        "routes": [
+          13
+        ]
+      },
+      {
+        "id": "8",
+        "name": "David Martinez",
+        "national_id": 2233445566,
+        "location": "Suburb",
+        "phone": 2222222222,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          14,
+          15
+        ],
+        "routes": [
+          14,
+          15
+        ]
+      },
+      {
+        "id": "9",
+        "name": "Jessica Taylor",
+        "national_id": 5566778899,
+        "location": "City",
+        "phone": 1111111111,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          16
+        ],
+        "routes": [
+          16
+        ]
+      },
+      {
+        "id": "10",
+        "name": "Christopher Wilson",
+        "national_id": 9900112233,
+        "location": "Town",
+        "phone": 3333333333,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          17,
+          18
+        ],
+        "routes": [
+          17,
+          18
+        ]
+      }
+    ],
+    "routes": [
+      {
+        "id": "2",
+        "name": "Route 2",
+        "price": 20,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          4,
+          5
+        ]
+      },
+      {
+        "id": "3",
+        "name": "Route 3",
+        "price": 15,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          6
+        ]
+      },
+      {
+        "id": "4",
+        "name": "Route 4",
+        "price": 25,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          7
+        ]
+      },
+      {
+        "id": "5",
+        "name": "Route 5",
+        "price": 30,
+        "created_at": "2024-01-26T12:00:00",
+        "updated_at": "2024-01-26T12:00:00",
+        "matatus": [
+          8,
+          9
+        ]
+      }
+    ],
+    "matatus": [
+      {
+        "id": "3",
+        "driver_name": "Alice",
+        "driver_contact": 5555555555,
+        "number_plate": "DEF 456",
+        "capacity": "65",
+        "trips": 6,
+        "member_id": 2,
+        "route_id": "5"
+      },
+      {
+        "id": "4",
+        "driver_name": "Bob",
+        "driver_contact": 1111111111,
+        "number_plate": "MNO 789",
+        "capacity": 45,
+        "trips": 3,
+        "member_id": 2,
+        "route_id": "9"
+      },
+      {
+        "id": "5",
+        "driver_name": "Mary",
+        "driver_contact": 6666666666,
+        "number_plate": "PQR 321",
+        "capacity": 55,
+        "trips": 7,
+        "member_id": 3,
+        "route_id": 4
+      },
+      {
+        "id": "6",
+        "driver_name": "Michael",
+        "driver_contact": 7777777777,
+        "number_plate": "STU 654",
+        "capacity": 35,
+        "trips": 4,
+        "member_id": 3,
+        "route_id": 5
+      }
+    ]
+  }
