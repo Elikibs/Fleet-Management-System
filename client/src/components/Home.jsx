@@ -1,9 +1,10 @@
 import React from 'react'
 import NavBar from './NavBar';
-// import { Carousel } from 'react-bootstrap';
 import Dashboard from './Dashboard.jsx';
+import herobus from "../images/fleet.jpeg";
 import Footer from './Footer';
 import Card from 'react-bootstrap/Card';
+
 
 export default function Home() {
   return (
@@ -13,13 +14,23 @@ export default function Home() {
    <Dashboard/>
    <div className='content'>
    <div className='welcome'>
-    <h1>Hello User</h1>
+   <div className="header-container">
+   <div className="text-container">
+   <h1>Hello User</h1>
     <h2>Revolutionize Your Fleet Management with <strong>Fleetsense</strong>.</h2>
+   </div>
+   
+    <div className='fleetimage-container'>
+    <img className='fleetimage'
+      src={herobus} alt="Fleetsense" />
     </div>
+    </div>
+   </div>
+    
     <br></br>
     <div className='cardcontainer'>
     <div className='home-cards'>
-    <Card style={{ width: '18rem', borderRadius:'50px' }}>
+    <Card style={{ width: '18rem', borderRadius:'40px' }}>
       <Card.Img variant="top" src="https://abiweb.com/wp-content/uploads/2022/08/61880478-0-1384868-PeriodLandin.webp" style={{height: '140px',width: '90px;'}}/>
       <Card.Body>
         <Card.Title>Fleets Companion</Card.Title>
@@ -28,7 +39,7 @@ export default function Home() {
         </Card.Text>
       </Card.Body>
     </Card>
-    <Card style={{ width: '18rem', borderRadius:'50px'  }}>
+    <Card style={{ width: '18rem', borderRadius:'40px'  }}>
       <Card.Img variant="top" src="https://www.svgrepo.com/show/375378/cloud-optimization-ai-fleet-routing-api.svg" style={{height: '140px',width: '90px;'}}/>
       <Card.Body>
         <Card.Title>Manage routes</Card.Title>
@@ -38,7 +49,7 @@ export default function Home() {
         </Card.Text>
       </Card.Body>
     </Card>
-    <Card style={{ width: '18rem', borderRadius:'50px'  }}>
+    <Card style={{ width: '18rem', borderRadius:'40px'  }}>
       <Card.Img variant="top" src="https://cdn-icons-png.flaticon.com/512/10794/10794258.png" style={{height: '140px',width: '90px;'}}/>
       <Card.Body>
         <Card.Title>Manage Matatus</Card.Title>
