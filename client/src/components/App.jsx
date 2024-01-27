@@ -7,6 +7,7 @@ import Members from './Members';
 import MatatuRoutes from './MatatuRoutes';
 import Matatus from './Matatus';
 import AddMatatu from './AddMatatu';
+import EditMatatu from './EditMatatu'
 import "./App.css";
 
 
@@ -49,8 +50,9 @@ const handleDeleteMatatu = (id) => {
       <Route path="/home" element={<Home/>}/>
       <Route path="/members" element={<Members/>}/>
       <Route path="/matatu_routes" element={<MatatuRoutes/>}/>
-      <Route path="/matatus" element={<Matatus/>}/> 
+      <Route path="/matatus" element={<Matatus matatus={matatus}  handleDeleteMatatu={handleDeleteMatatu}/>}/> 
       <Route path="/add_matatu" element={<AddMatatu handleAddMatatu={handleAddMatatu}/>}/>
+      <Route path="/edit_matatu/:id" element={<EditMatatu />} />
 
       </Routes>
 
