@@ -16,14 +16,14 @@ function App() {
   // fetch matatus
   const [matatus, setMatatus] = useState([])
   useEffect(()=> {
-    fetch("http://localhost:3000/matatus")
+    fetch("")
     .then((r) => r.json())
     .then((data) => setMatatus(data))
 },[]);
 
 //function to delete matatus
 const handleDeleteMatatu = (id) => {
-  fetch(`http://localhost:3000/matatus/${id}`, {
+  fetch(``, {
       method: 'DELETE'
   })
   .then(response => {
