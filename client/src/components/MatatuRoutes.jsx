@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import NavBar from './NavBar';
 import Dashboard from './Dashboard';
 import Footer from './Footer';
@@ -8,18 +8,38 @@ import AddRoute from './AddRoute';
 
 export default function MatatuRoutes() {
   const [modalShow, setModalShow] = useState(false);
-  // const [route, setRoute] = useState([])
+  const [routes, setRoutes] = useState([])
 
   const toggleModal = () => setModalShow(!modalShow);
   const handleAddRoute = (event) => {
     event.preventDefault();
     toggleModal();
   };
-//   useEffect(()=> {
-//     fetch('https://pizza-restaurant-buse.onrender.com/restaurants')
-//     .then((r) => r.json())
-//     .then((data) => setRestaurants(data))
-// },[]);
+  useEffect(()=> {
+     fetch('http://localhost:3000/routes')
+    .then((r) => r.json())
+     .then((data) => setRoutes(data))
+ },[]);
+function handleAddRoutes(newRoute){
+    setRoutes([...routes,newRoute])
+  }
+
+
+  const handleDeleteRoute = (id) => {
+    fetch(`http://localhost:3000/routes/${id}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            setRoutes((prevroute) => prevroute.filter((route) => route.id !== id));
+        } else {
+            console.error('Failed to delete matatu');
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting matatu:', error);
+    });
+};
 
   const hideModal = () => setModalShow(false);
 
@@ -42,25 +62,22 @@ export default function MatatuRoutes() {
           </div>
           <ul>
             <span>
-              <div className='lists'>
-                <h5>NRB-Juja</h5>
-                <h5 className='price'>Price:80</h5>
-                <span className='deleteroute'>
-                  <FontAwesomeIcon icon={faTrashCan} style={{ color: 'navy' }} />
+              {routes.map((route)=>(
+                <div className='lists'>
+                <h5>{route.name}</h5>
+                <h5 className='price'>Price:{route.price}</h5>
+                <span className='deleteroute' >
+                  <FontAwesomeIcon icon={faTrashCan} style={{ color: 'navy' }} onClick={() => handleDeleteRoute(route.id)}/>
                 </span>
               </div>
-              <div className='lists'>
-                <h5>NRB-Kikuyu</h5>
-                <h5 className='price'>Price:70</h5>
-                <span className='deleteroute'>
-                  <FontAwesomeIcon icon={faTrashCan} style={{ color: 'navy' }} />
-                </span>
-              </div>
+
+              ))}
             </span>
           </ul>
         </div>
       </div>
-      <AddRoute show={modalShow} onHide={hideModal} onAddRoute={handleAddRoute} />
+      {/* pass handleroutes prop */}
+      <AddRoute show={modalShow} onHide={hideModal} onAddRoute={handleAddRoute} handleAddRoutes={handleAddRoutes} />
       <Footer />
     </div>
   );

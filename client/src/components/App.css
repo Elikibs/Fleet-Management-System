@@ -15,7 +15,7 @@ body {
   flex-direction: column;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: 10;
 }
 
 .header {
@@ -349,16 +349,18 @@ body {
 .content{
   padding-left: 5%;
   padding-top: 50px;
+  flex-wrap: wrap;
 }
 .text-center{
   background-color: navy;
 
 }
 .welcome{
+  justify-content: center;
   width: 1400px;
   border-radius: 50px;
   height: 300px;
-  background-color: #BEC0D4;
+  background-color: #4c528d;
   padding-left: 40%;
 }
 
@@ -405,4 +407,62 @@ body {
   margin-left: 50px;
 }
 
+h1 {
+  text-align:centre;
+}
+
+h2 {
+  text-align: left;
+  margin-left: -230px; /* Adjust this value as needed for desired spacing */
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+  gap: 20px;
+  padding: 10px;
+  margin-right: 20px;
+}
+
+.member-card {
+  width: 18rem;
+  border-radius: 20px;
+  padding: 20px; /* Adjust the padding to increase the height */
+  margin-bottom: 20px
+}
+
+.member-img {
+  height: 120px;
+  width: 90px;
+}
+
+.member-link {
+  text-decoration: none;
+  color: navy;
+}
+
+.member-link:hover {
+  text-decoration: underline;
+  color: #40A2D8;
+}
+.home-cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 100px;
+  padding: 10px;
+  margin-right: 10px;
+
+}
+.cardcontainer{
+  margin-top: 100px;
+  padding-left: 12%;
+}
+
+.homeimage{
+  height: 150px;
+}
+.paragraph{
+  font-style: italic;
+}
 
