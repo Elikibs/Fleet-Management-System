@@ -158,14 +158,19 @@ def get_routes_per_user():
 @jwt_required()
 def get_matatus_per_user():
     identity = get_jwt_identity()
+
     user = User.query.filter_by(username = identity).first()
-    if user: 
+
+    if user:
+        # Query matatus associated with the user
         matatus = Matatu.query.filter_by(user_id = user.id).all()
+        # Serialize the routes using Marshmallow schema
         serialized_matatus = MatatuSchema().dump(matatus, many = True)
 
         return jsonify(
             {"matatus": serialized_matatus}
         ), 200
+    
     return jsonify({"message": "User not found"}), 404
 
 
