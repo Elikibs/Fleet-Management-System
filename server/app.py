@@ -154,6 +154,19 @@ def get_routes_per_user():
     
     return jsonify({"message": "User not found"}), 404
 
+@matatu_bp.get('/peruser')
+@jwt_required()
+def get_matatus_per_user():
+    identity = get_jwt_identity()
+    user = User.query.filter_by(username = identity).first()
+    if user: 
+        matatus = Matatu.query.filter_by(user_id = user.id).all()
+        serialized_matatus = MatatuSchema().dump(matatus, many = True)
+
+        return jsonify(
+            {"matatus": serialized_matatus}
+        ), 200
+    return jsonify({"message": "User not found"}), 404
 
 
 # Register blueprints
