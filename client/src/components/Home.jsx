@@ -1,7 +1,6 @@
 import React from 'react'
 import NavBar from './NavBar';
 import Dashboard from './Dashboard.jsx';
-import herobus from "../images/fleet.jpeg";
 import Footer from './Footer';
 import Card from 'react-bootstrap/Card';
 
@@ -14,19 +13,14 @@ export default function Home() {
    <Dashboard/>
    <div className='content'>
    <div className='welcome'>
-   <div className="header-container">
-   <div className="text-container">
-   <h1>Hello User</h1>
-    <h2>Revolutionize Your Fleet Management with <strong>Fleetsense</strong>.</h2>
-   </div>
-   
-    <div className='fleetimage-container'>
-    <img className='fleetimage'
-      src={herobus} alt="Fleetsense" />
+    <br></br>
+   <img className='homeimage'
+      src="https://cdn-icons-png.flaticon.com/512/9131/9131529.png" alt="Fleetsense" />
+      <br></br>
+      <br></br>
+    <h1>Hello User</h1>
+    <h2 className='paragraph'>Revolutionize Your Fleet Management with <strong>Fleetsense</strong>.</h2>
     </div>
-    </div>
-   </div>
-    
     <br></br>
     <div className='cardcontainer'>
     <div className='home-cards'>

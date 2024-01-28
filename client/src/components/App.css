@@ -356,6 +356,7 @@ body {
 
 }
 .welcome{
+  justify-content: center;
   width: 1400px;
   border-radius: 50px;
   height: 300px;
@@ -448,31 +449,20 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 60px;
+  gap: 100px;
   padding: 10px;
   margin-right: 10px;
 
 }
 .cardcontainer{
   margin-top: 100px;
-  padding-left: 15%;
+  padding-left: 12%;
 }
 
-.fleetimage{
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  min-height: 300px;
-  border-radius: 40px;
+.homeimage{
+  height: 150px;
 }
-.header-container {
-  display: flex;
-  align-items: center;
+.paragraph{
+  font-style: italic;
 }
-
-.text-container {
-  flex: 1; /* Allow the text container to grow */
-  padding-right: 20px; /* Adjust spacing as needed */
-}
-
 
