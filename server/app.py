@@ -109,8 +109,8 @@ def logout_user():
 def get_all_users():
     claims = get_jwt()
     if claims.get("is_admin") == True:
-        page = request.args.get('page', default=1, type=int)
-        per_page = request.args.get('per_page', default=1, type=int)
+        page = request.args.get('page', type=int)
+        per_page = request.args.get('per_page', type=int)
 
         users = User.query.paginate(
             page = page,
