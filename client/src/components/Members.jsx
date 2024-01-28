@@ -32,8 +32,8 @@ export default function Members() {
                   />
                   <br></br>
                   <br />
-                  <Card.Subtitle className="mb-2 text-muted">{member.name}</Card.Subtitle>
-                  <Card.Text>location{member.location}</Card.Text>
+                  <Card.Subtitle className="mb-2 text-muted">{member.username}</Card.Subtitle>
+                  <Card.Text>location{member.email}</Card.Text>
                   <Card.Link href="#">View Member</Card.Link>
                 </Card.Body>
               </Card>
