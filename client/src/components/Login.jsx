@@ -20,7 +20,7 @@ export default function Login() {
         password,
       });
 
-      // console.log(response.data.access_token)
+      console.log(response.data.access_token)
 
       const { access_token, refresh_token } = response.data;
       // console.log(access_token)

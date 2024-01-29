@@ -8,9 +8,21 @@ export default function Members() {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    fetch('/users/all')
-      .then((r) => r.json())
-      .then((data) => setMembers(data));
+    const token = localStorage.getItem('accessToken');
+  
+    fetch('/users/all', {
+      headers: {
+        Authorization: {token},
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => setMembers(data))
+      .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
   return (
