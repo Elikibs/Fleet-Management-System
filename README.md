@@ -43,6 +43,16 @@ cd < project directory>
 
    python app.py
 
+### Frontend Setup
+
+   1. Install frontend dependencies using npm:
+
+    npm install --prefix client
+
+   2. Run the React app on localhost:4000:
+
+    npm start --prefix client
+
 # Usage
 ## User Authentication
 - Register: Create a new account by providing a username, email, and password.
