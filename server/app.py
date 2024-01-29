@@ -1,195 +1,238 @@
-from flask import Flask, request, make_response, jsonify, session
-from flask_restful import Resource, Api
+from flask import Flask, Blueprint, jsonify, request
 from flask_migrate import Migrate
-from models import db, Member, Route, Matatu
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt, current_user, get_jwt_identity
 from flask_cors import CORS
+from models import db, User, TokenBlocklist, Route, Matatu
+from schemas import UserSchema, RouteSchema, MatatuSchema
 
 app = Flask(__name__)
+app.secret_key = 'b33b151adaccb5d08c9eb0c0'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fleets.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
-migrate = Migrate(app, db)
-db.init_app(app)
+# Connecting with react
 CORS(app)
-api = Api(app)
 
-class Index(Resource):
-    def get(self):
-        response_dict = {
-            "index": "Fleets RESTful API"
+# Initialize apps
+migrate = Migrate(app, db)
+jwt = JWTManager(app)
+db.init_app(app)
+
+# Initializing blueprints 
+auth_bp = Blueprint('auth', __name__)
+user_bp = Blueprint('users', __name__)
+route_bp = Blueprint('routes', __name__)
+matatu_bp = Blueprint('matatus', __name__)
+
+# Creating blueprints
+@auth_bp.post('/register')
+def register_user():
+    data = request.get_json()
+
+    user = User.get_user_by_username(username=data.get('username'))
+
+    if user is not None:
+        return jsonify(
+            {"Error": "User already exists"}
+        ), 403 
+    new_user = User(
+        username = data.get('username'),
+        email = data.get('email'),
+    )
+    new_user.set_password(password=data.get('password'))
+    new_user.save_user()
+
+    return jsonify(
+        {"Message": "User created"}
+    ), 201
+
+@auth_bp.post('/login')
+def login_user():
+    data = request.get_json()
+
+    user = User.get_user_by_username(username=data.get('username'))
+    
+    if user and (user.check_password(password= data.get('password'))):
+        access_token = create_access_token(identity = user.username)
+        refresh_token = create_refresh_token(identity =user.username)
+        return jsonify(
+            {
+                "Message": "Logged in", 
+                "tokens" : {
+                    "access": access_token,
+                    "refresh": refresh_token,
+                }
+            }
+        ), 200
+    
+    return jsonify(
+        {"Error": "Invalid username or password"}
+    ), 400
+
+
+@auth_bp.get('/whoami')
+@jwt_required()
+def whoami():
+    return jsonify(
+        {
+            "user_details": {
+                "username": current_user.username,
+                "email": current_user.email
+            }
         }
-        response = make_response(
-            jsonify(response_dict), 
-            200,
-        )
-        return response
-api.add_resource(Index, '/')
-
-# Login endpoint
-class Login(Resource):
-    def post(self):
-        member = Member.query.filter(Member.name == request.get_json()['name']).first()
         
-        if member:
-            session['user_id'] = member.id
-            return make_response(jsonify(member.to_dict()), 200)
-        else:
-            return make_response(jsonify({"error": "User not found"}), 404)
+    )
+
+@auth_bp.get('/refresh')
+@jwt_required(refresh=True)
+def refresh_access():
+    identity  = get_jwt_identity()
+    new_access_token = create_access_token(identity = identity)
+    return jsonify(
+        {"acess_token":new_access_token}
+    )
+
+@auth_bp.get('/logout')
+@jwt_required(verify_type=False)
+def logout_user():
+    jwt = get_jwt()
+    jti = jwt['jti']
+    token_type = jwt['type']
+
+    token_b = TokenBlocklist(jti=jti)
+    token_b.save_token()
+
+    return jsonify(
+        {"message": f"{token_type} token revoked successfully"}
+    ), 200
 
 
-# Logout endpoint
-class Logout(Resource):
-    def delete(self):
-        session['user_id'] = None
-        return make_response(jsonify({'message': '204: No Content'}), 204)
-
-# Checking session endpoint
-class CheckSession(Resource):
-    def get(self):
-        
-        user = Member.query.filter(Member.id == session.get('user_id')).first()
-        
-        if user:
-            return make_response(jsonify(user.to_dict()),200)
-        else:
-            return make_response(jsonify({}), 401)
 
 
-class Members(Resource):
-    def get(self):
-        response_dict_list = [n.to_dict() for n in Member.query.all()]
-        response = make_response(
-            jsonify(response_dict_list),
-            200,
+@user_bp.get('/all')
+@jwt_required()
+def get_all_users():
+    claims = get_jwt()
+    if claims.get("is_admin") == True:
+        page = request.args.get('page', type=int)
+        per_page = request.args.get('per_page', type=int)
+
+        users = User.query.paginate(
+            page = page,
+            per_page = per_page
         )
-        return response
+        response = UserSchema().dump(users, many=True)
+        return jsonify(response), 200
     
-    def post(self):
-        new_member = Member(
-            name=request.form['name'],
-            national_id=request.form['national_id'],
-            location=request.form['location'],
-            phone=request.form['phone'],
-        )
-        db.session.add(new_member)
-        db.session.commit()
+    return jsonify(
+        {
+            "message": "You are not authorized to access this"
+        }
+    ),401
 
-        response_dict = new_member.to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            201,
-        )
-        return response
+@route_bp.get('/peruser')
+@jwt_required()
+def get_routes_per_user():
+    identity = get_jwt_identity()
+
+    user = User.query.filter_by(username=identity).first()
+
+    if user:
+        # Query matatus associated with the user
+        matatus = Matatu.query.filter_by(user_id=user.id).all()
+        # Extract unique route ids from the matatus
+        route_ids = set(matatu.route_id for matatu in matatus)
+        # Query routes based on the extracted route ids
+        routes = Route.query.filter(Route.id.in_(route_ids)).all()
+        # Serialize the routes using Marshmallow schema
+        serialized_routes = RouteSchema().dump(routes, many=True)
+
+        return jsonify(
+            {"routes": serialized_routes}
+        ), 200
     
-api.add_resource(Members, '/members')
+    return jsonify({"message": "User not found"}), 404
 
-# Retrieving single records
-class MemberByID(Resource):
-    def get(self, id):
-        response_dict = Member.query.filter_by(id=id).first().to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            200,
-        )
-        return response
+@matatu_bp.get('/peruser')
+@jwt_required()
+def get_matatus_per_user():
+    identity = get_jwt_identity()
+
+    user = User.query.filter_by(username = identity).first()
+
+    if user:
+        # Query matatus associated with the user
+        matatus = Matatu.query.filter_by(user_id = user.id).all()
+        # Serialize the routes using Marshmallow schema
+        serialized_matatus = MatatuSchema().dump(matatus, many = True)
+
+        return jsonify(
+            {"matatus": serialized_matatus}
+        ), 200
     
-    def patch(self, id):
-        pass
+    return jsonify({"message": "User not found"}), 404
+
+
+# Register blueprints
+app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(user_bp, url_prefix='/users')
+app.register_blueprint(route_bp, url_prefix='/routes')
+app.register_blueprint(matatu_bp, url_prefix='/matatus')
+
+# load user
+@jwt.user_lookup_loader
+def user_lookup_callback(jwt_header, jwt_data):
+    identity = jwt_data['sub']
+    return User.query.filter_by(username=identity).one_or_none()
+
+
+# additional claims
+@jwt.additional_claims_loader
+def make_additional_claims(identity):
+    if identity == "John Doe":
+        return {"is_admin": True}
+    return {"is_admin": False}
+
+# jwt error handlers
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_data):
+    return jsonify(
+        {
+            "message": "Token hasexpired",
+            "error" : "token_expired"
+        }
+    ), 401
+
+@jwt.invalid_token_loader
+def invalid_token_callback(error):
+    return jsonify(
+        {
+            "message": "Signature verification failed",
+            "error": "invalid_token"
+        }
+    ), 401
+
+@jwt.unauthorized_loader
+def missing_token_callback(error):
+    return jsonify(
+        {
+            "message": "Request does not contain a valid token",
+            "error": "authorization required"
+        }
+    ), 401
+
+@jwt.token_in_blocklist_loader
+def token_in_blocklist_callback(jwt_header, jwt_data):
+    jti = jwt_data['jti']
+
+    token = db.session.query(TokenBlocklist).filter(TokenBlocklist.jti == jti).scalar()
     
-    def delete(self, id):
-        pass
-api.add_resource(MemberByID, '/members/<int:id>')
+    return token is not None
 
-class Routes(Resource):
-    member = Member.query.filter(Member.id == session.get('user_id')).first()
-    def get(self):
 
-            response_dict_list = [n.to_dict() for n in Route.query.all()]
-            response = make_response(
-                jsonify(response_dict_list), 
-                200,
-            )
-            return response
-    def post(self):
-        new_route = Route(
-            name=request.form['name'],
-            price=request.form['price'],
-        )
-        db.session.add(new_route)
-        db.session.commit()
 
-        response_dict = new_route.to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            201,
-        )
-        return response
-
-api.add_resource(Routes, '/routes')
-
-class RouteByID(Resource):
-    def get(self, id):
-        response_dict = Route.query.filter_by(id=id).first().to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            200,
-        )
-        return response
-    
-    def patch(self, id):
-        pass
-    
-    def delete(self, id):
-        pass
-api.add_resource(MemberByID, '/routes/<int:id>')
-
-class Matatus(Resource):
-    def get(self):
-        response_dict_list = [n.to_dict()  for n in Matatu.query.all()]
-        response = make_response(
-            jsonify(response_dict_list),
-            200,
-        )
-        return response
-    def post(self):
-        new_matatu = Matatu(
-            driver_name=request.form['driver_name'],
-            driver_contact=request.form['driver_contact'],
-            number_plate=request.form['number_plate'],
-            capacity=request.form['capacity'],
-            avg_rounds_pd=request.form['avg_rounds_pd'],
-        )
-        db.session.add(new_matatu)
-        db.session.commit()
-
-        response_dict = new_matatu.to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            201,
-        )
-        return response
-api.add_resource(Matatus, '/matatus')
-
-class MatatuByID(Resource):
-    def get(self, id):
-        response_dict = Matatu.query.filter_by(id=id).first().to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            200,
-        )
-        return response
-    
-    def patch(self, id):
-        pass
-    
-    def delete(self, id):
-        pass
-api.add_resource(MemberByID, '/matatus/<int:id>')
-
-api.add_resource(Login, '/login')
-api.add_resource(Logout, '/logout')
-api.add_resource(CheckSession, '/check_session')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+

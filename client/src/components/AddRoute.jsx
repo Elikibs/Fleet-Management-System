@@ -22,7 +22,7 @@ export default function AddRoute({ show, onHide, onAddRoute, handleAddRoutes }) 
        name:input.name,
        price:input.price
     };
-    fetch("http://localhost:3000/routes" ,{
+    fetch("" ,{
       method: "POST",
       headers:{
         "Content-Type": "application/json"
