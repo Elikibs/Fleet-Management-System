@@ -23,14 +23,25 @@ git clone https://github.com/your-username/fleetsense.git
 ## Navigate to the project directory:
 cd < project directory>
 
-## Install dependencies using pip:
-pip install -r requirements.txt
+### Backend Setup
 
-## Set up the database:
-python app.py create_db
+1. Install backend dependencies using Pipenv:
 
-## Run the application:
-python app.py runserver
+
+   pipenv install 
+
+2. Run database migrations:
+
+   flask db upgrade
+
+3. Seed the database with initial data:
+
+
+   python seed.py
+
+4. Run the Flask API on localhost:5555:
+
+   python app.py
 
 # Usage
 ## User Authentication
