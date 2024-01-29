@@ -9,8 +9,13 @@ FleetSense is a web application designed to streamline the management of fleets 
 4. Member management: Manage member information and track member activity.
 5. Token-based authentication: Secure authentication using JWT tokens with token blacklist     	functionality.
 
-# Installation
-To run FleetSense locally, follow these steps:
+## License
+
+This project is licensed under the [MIT License](LICENSE.md).
+
+## Setup
+
+To get started with this project, follow the setup instructions below ;
 
 ## Clone the repository:
 git clone https://github.com/your-username/fleetsense.git
