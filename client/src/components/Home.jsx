@@ -29,7 +29,7 @@ export default function Home() {
       <Card.Body>
         <Card.Title>Fleets Companion</Card.Title>
         <Card.Text style={{ fontSize: '14px' }}>
-          Digitalize end to end fleet operations and dispatches to improve efficiency, complience and management. Manage your own fleets with us!!
+          Digitalize end to end fleet operations and dispatches to improve efficiency, complience and management. 
         </Card.Text>
       </Card.Body>
     </Card>
