@@ -16,7 +16,7 @@ function Herosection() {
         </p>
         <p>The ultimate solution that allows you to manage your vehicles</p>
 
-        <button className="sign-in-button" onClick={handelogin}>Sign in</button>
+        <button className="sign-in-button" onClick={handelogin}>Get started</button>
       </div>
       <div>
         <img className="herobus-image" src={herobus} alt="One Of Our Buses" />

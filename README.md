@@ -43,6 +43,25 @@ cd < project directory>
 
    python app.py
 
+### Frontend Setup
+
+   1. Install frontend dependencies using npm:
+
+    npm install --prefix client
+
+   2. Run the React app on localhost:4000:
+
+    npm start --prefix client
+
+### Testing
+
+You can test your progress using one of the following methods:
+
+
+    Interact with the API using the React frontend application. 
+    
+    Use Postman to make requests to the Flask API.
+
 # Usage
 ## User Authentication
 - Register: Create a new account by providing a username, email, and password.
