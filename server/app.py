@@ -1,14 +1,18 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt, current_user, get_jwt_identity
-from models import db, User, TokenBlocklist
-from schemas import UserSchema
+from flask_cors import CORS
+from models import db, User, TokenBlocklist, Route, Matatu
+from schemas import UserSchema, RouteSchema, MatatuSchema
 
 app = Flask(__name__)
 app.secret_key = 'b33b151adaccb5d08c9eb0c0'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fleets.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
+
+# Connecting with react
+CORS(app)
 
 # Initialize apps
 migrate = Migrate(app, db)
@@ -18,6 +22,8 @@ db.init_app(app)
 # Initializing blueprints 
 auth_bp = Blueprint('auth', __name__)
 user_bp = Blueprint('users', __name__)
+route_bp = Blueprint('routes', __name__)
+matatu_bp = Blueprint('matatus', __name__)
 
 # Creating blueprints
 @auth_bp.post('/register')
@@ -125,10 +131,54 @@ def get_all_users():
         }
     ),401
 
+@route_bp.get('/peruser')
+@jwt_required()
+def get_routes_per_user():
+    identity = get_jwt_identity()
+
+    user = User.query.filter_by(username=identity).first()
+
+    if user:
+        # Query matatus associated with the user
+        matatus = Matatu.query.filter_by(user_id=user.id).all()
+        # Extract unique route ids from the matatus
+        route_ids = set(matatu.route_id for matatu in matatus)
+        # Query routes based on the extracted route ids
+        routes = Route.query.filter(Route.id.in_(route_ids)).all()
+        # Serialize the routes using Marshmallow schema
+        serialized_routes = RouteSchema().dump(routes, many=True)
+
+        return jsonify(
+            {"routes": serialized_routes}
+        ), 200
+    
+    return jsonify({"message": "User not found"}), 404
+
+@matatu_bp.get('/peruser')
+@jwt_required()
+def get_matatus_per_user():
+    identity = get_jwt_identity()
+
+    user = User.query.filter_by(username = identity).first()
+
+    if user:
+        # Query matatus associated with the user
+        matatus = Matatu.query.filter_by(user_id = user.id).all()
+        # Serialize the routes using Marshmallow schema
+        serialized_matatus = MatatuSchema().dump(matatus, many = True)
+
+        return jsonify(
+            {"matatus": serialized_matatus}
+        ), 200
+    
+    return jsonify({"message": "User not found"}), 404
+
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(user_bp, url_prefix='/users')
+app.register_blueprint(route_bp, url_prefix='/routes')
+app.register_blueprint(matatu_bp, url_prefix='/matatus')
 
 # load user
 @jwt.user_lookup_loader

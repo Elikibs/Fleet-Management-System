@@ -16,6 +16,7 @@ importlib-metadata = "6.0.0"
 importlib-resources = "5.10.0"
 marshmallow = "3.18.0"
 marshmallow-sqlalchemy = "0.28.1"
+flask-cors = "3.0.10"
 
 [dev-packages]
 ipdb = "0.13.9"

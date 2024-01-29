@@ -35,7 +35,7 @@ export default function AddMatatu({handleAddMatatu}) {
         capacity: input.capacity,
         trips: input.trips,
       };
-      fetch("http://localhost:3000/matatus" ,{
+      fetch("" ,{
         method: "POST",
         headers:{
           "Content-Type": "application/json"

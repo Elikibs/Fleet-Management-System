@@ -1,26 +1,42 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Login() {
+  const [username, setUsername] = useState(" ")
+  const [password, setPassword] = useState('');
   const navigate = useNavigate()
 
   function handleClick(){
     navigate("/register")
   }
-  function handleLogIn(){
-    const isAdmin = false; // Replace with your authentication logic
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('/auth/login', {
+        username,
+        password,
+      });
 
-    if (isAdmin) {
-      // Navigate to admin page
-      navigate("/admin");
-    } else {
-      // Navigate to home page
-      navigate("/home");
+      // console.log(response.data.access_token)
+
+      const { access_token, refresh_token } = response.data;
+      // console.log(access_token)
+      // setToken(access_token);
+    
+
+      // Store tokens in local storage
+      localStorage.setItem('accessToken', access_token);
+      localStorage.setItem('refreshToken', refresh_token);
+
+      // Redirect to home or another page
+      navigate('/home');
+    } catch (error) {
+      alert('Error logging in:', error);
     }
-  }
+  };
   return (
     <div className='containerr'>
       <div className='form-container sign-in'>
@@ -32,10 +48,16 @@ export default function Login() {
             <FontAwesomeIcon icon={faGithub} />
           </div>
           <span>or use your email for registration</span>
-          <input type='email' placeholder='Email'/>
-          <input type='password' placeholder='Password'/>
+          <input type='email'
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder='Email'/>
+          <input type='password' 
+           value={password}
+           onChange={(e) => setPassword(e.target.value)}
+          placeholder='Password'/>
           {/* <Link>Forgot your password?</Link> */}
-          <button onClick={handleLogIn}>Sign In</button>
+          <button onClick={handleLogin}>Sign In</button>
         </form>
       </div>
       <div className='toggle-container'>
@@ -51,4 +73,3 @@ export default function Login() {
     </div>
   );
 }
-
