@@ -60,7 +60,7 @@ You can test your progress using one of the following methods:
 
     Interact with the API using the React frontend application. 
     
-    Use Postman to make requests to the Flask API..
+    Use Postman to make requests to the Flask API.
 
 # Usage
 ## User Authentication
