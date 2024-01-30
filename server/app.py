@@ -7,7 +7,12 @@ load_dotenv()
 from models import db, User, TokenBlocklist, Route, Matatu
 from schemas import UserSchema, RouteSchema, MatatuSchema
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='../client/build',
+    template_folder='../client/build'
+)
 app.secret_key = 'b33b151adaccb5d08c9eb0c0'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fleets.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
