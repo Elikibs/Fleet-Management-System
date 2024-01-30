@@ -4,26 +4,26 @@ import NavBar from './NavBar';
 import Dashboard from './Dashboard';
 import Footer from './Footer';
 
-export default function Members() {
+export default function Members({ accessToken }) {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-  
     fetch('/users/all', {
+      method: 'GET',
       headers: {
-        Authorization: {token},
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json();
       })
       .then((data) => setMembers(data))
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+      .catch((error) => console.error('Error fetching members:', error));
+  }, [accessToken]);
 
   return (
     <div>
@@ -42,10 +42,10 @@ export default function Members() {
                     src="https://cdn-icons-png.flaticon.com/512/9131/9131529.png"
                     className='member-img'
                   />
-                  <br></br>
+                  <br />
                   <br />
                   <Card.Subtitle className="mb-2 text-muted">{member.username}</Card.Subtitle>
-                  <Card.Text>location{member.email}</Card.Text>
+                  <Card.Text>{member.email}</Card.Text>
                   <Card.Link href="#">View Member</Card.Link>
                 </Card.Body>
               </Card>
