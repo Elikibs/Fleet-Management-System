@@ -131,47 +131,209 @@ def get_all_users():
         }
     ),401
 
-@route_bp.get('/peruser')
+@route_bp.get('/allroutes')
 @jwt_required()
-def get_routes_per_user():
+def get_all_routes():
+    # Get the identity of the current user from the JWT
     identity = get_jwt_identity()
 
-    user = User.query.filter_by(username=identity).first()
+    # Query all matatus in the system
+    all_matatus = Matatu.query.all()
 
-    if user:
-        # Query matatus associated with the user
-        matatus = Matatu.query.filter_by(user_id=user.id).all()
-        # Extract unique route ids from the matatus
-        route_ids = set(matatu.route_id for matatu in matatus)
-        # Query routes based on the extracted route ids
-        routes = Route.query.filter(Route.id.in_(route_ids)).all()
-        # Serialize the routes using Marshmallow schema
-        serialized_routes = RouteSchema().dump(routes, many=True)
+    # Extract unique route ids from all matatus
+    route_ids = set(matatu.route_id for matatu in all_matatus)
 
-        return jsonify(
-            {"routes": serialized_routes}
-        ), 200
-    
-    return jsonify({"message": "User not found"}), 404
+    # Query all routes based on the extracted route ids
+    all_routes = Route.query.filter(Route.id.in_(route_ids)).all()
 
-@matatu_bp.get('/peruser')
+    # Serialize the routes using Marshmallow schema
+    serialized_routes = RouteSchema().dump(all_routes, many=True)
+
+    return jsonify(serialized_routes), 200
+
+# add route for the logged-in user
+@route_bp.post('/add')
 @jwt_required()
-def get_matatus_per_user():
+def add_route():
+    try:
+        identity = get_jwt_identity()
+        user = User.query.filter_by(username=identity).first()
+
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+
+        data = request.get_json()
+
+        # Validate the data as needed
+
+        new_route = Route(
+            name=data.get('name'),
+            price=data.get('price')
+        )
+
+        # Save the new Route to the database
+        db.session.add(new_route)
+        db.session.commit()
+
+        # Serialize the added Route and return it in the response
+        serialized_route = RouteSchema().dump(new_route)
+        return jsonify({"message": "Route added successfully", "route": serialized_route}), 201
+
+    except Exception as e:
+        # Handle exceptions as needed
+        return jsonify({"error": str(e)}), 500
+
+# delete route for the logged-in user
+@route_bp.delete('/delete/<int:route_id>')
+@jwt_required()
+def delete_route(route_id):
+    try:
+        identity = get_jwt_identity()
+        user = User.query.filter_by(username=identity).first()
+
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+
+        route = Route.query.filter_by(id=route_id).first()
+
+        if not route:
+            return jsonify({"message": "Route not found"}), 404
+
+        # Check if the route is associated with the current user
+        if route not in user.routes:
+            return jsonify({"message": "You are not authorized to delete this route"}), 403
+
+        # Delete the route from the database
+        db.session.delete(route)
+        db.session.commit()
+
+        return jsonify({"message": "Route deleted successfully"}), 200
+
+    except Exception as e:
+        # Handle exceptions as needed
+        return jsonify({"error": str(e)}), 500
+
+@matatu_bp.get('/allmatatus')
+@jwt_required()
+def get_all_matatus():
+    # Get the identity of the current user from the JWT
     identity = get_jwt_identity()
 
-    user = User.query.filter_by(username = identity).first()
+    # Query all matatus in the system
+    all_matatus = Matatu.query.all()
 
-    if user:
-        # Query matatus associated with the user
-        matatus = Matatu.query.filter_by(user_id = user.id).all()
-        # Serialize the routes using Marshmallow schema
-        serialized_matatus = MatatuSchema().dump(matatus, many = True)
+    # Serialize all matatus using Marshmallow schema
+    serialized_matatus = MatatuSchema().dump(all_matatus, many=True)
 
-        return jsonify(
-            {"matatus": serialized_matatus}
-        ), 200
-    
-    return jsonify({"message": "User not found"}), 404
+    return jsonify(serialized_matatus), 200
+
+# add matatu for the logged-in user
+@matatu_bp.post('/add')
+@jwt_required()
+def add_matatu():
+    try:
+        identity = get_jwt_identity()
+        user = User.query.filter_by(username=identity).first()
+
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+
+        data = request.get_json()
+
+        # Validate the data as needed
+
+        new_matatu = Matatu(
+            driver_name=data.get('driver_name'),
+            driver_contact=data.get('driver_contact'),
+            number_plate=data.get('number_plate'),
+            capacity=data.get('capacity'),
+            avg_rounds_pd=data.get('avg_rounds_pd'),
+            user_id=user.id,
+            route_id=data.get('route_id')  # Assuming route_id is provided in the request data
+        )
+
+        # Save the new Matatu to the database
+        db.session.add(new_matatu)
+        db.session.commit()
+
+        # Serialize the added Matatu and return it in the response
+        serialized_matatu = MatatuSchema().dump(new_matatu)
+        return jsonify({"message": "Matatu added successfully", "matatu": serialized_matatu}), 201
+
+    except Exception as e:
+        # Handle exceptions as needed
+        return jsonify({"error": str(e)}), 500
+
+# delete matatu for the logged-in user
+@matatu_bp.delete('/delete/<int:matatu_id>')
+@jwt_required()
+def delete_matatu(matatu_id):
+    try:
+        identity = get_jwt_identity()
+        user = User.query.filter_by(username=identity).first()
+
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+
+        matatu = Matatu.query.filter_by(id=matatu_id).first()
+
+        if not matatu:
+            return jsonify({"message": "Matatu not found"}), 404
+
+        # Check if the matatu is associated with the current user
+        if matatu.user_id != user.id:
+            return jsonify({"message": "You are not authorized to delete this matatu"}), 403
+
+        # Delete the matatu from the database
+        db.session.delete(matatu)
+        db.session.commit()
+
+        return jsonify({"message": "Matatu deleted successfully"}), 200
+
+    except Exception as e:
+        # Handle exceptions as needed
+        return jsonify({"error": str(e)}), 500
+
+# edit matatu for the logged-in user
+@matatu_bp.put('/edit/<int:matatu_id>')
+@jwt_required()
+def edit_matatu(matatu_id):
+    try:
+        identity = get_jwt_identity()
+        user = User.query.filter_by(username=identity).first()
+
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+
+        matatu = Matatu.query.filter_by(id=matatu_id).first()
+
+        if not matatu:
+            return jsonify({"message": "Matatu not found"}), 404
+
+        # Check if the matatu is associated with the current user
+        if matatu.user_id != user.id:
+            return jsonify({"message": "You are not authorized to edit this matatu"}), 403
+
+        data = request.get_json()
+
+        # Update matatu details
+        matatu.driver_name = data.get('driver_name', matatu.driver_name)
+        matatu.driver_contact = data.get('driver_contact', matatu.driver_contact)
+        matatu.number_plate = data.get('number_plate', matatu.number_plate)
+        matatu.capacity = data.get('capacity', matatu.capacity)
+        matatu.avg_rounds_pd = data.get('avg_rounds_pd', matatu.avg_rounds_pd)
+        matatu.route_id = data.get('route_id', matatu.route_id)
+
+        # Save the changes to the database
+        db.session.commit()
+
+        # Serialize the updated Matatu and return it in the response
+        serialized_matatu = MatatuSchema().dump(matatu)
+        return jsonify({"message": "Matatu updated successfully", "matatu": serialized_matatu}), 200
+
+    except Exception as e:
+        # Handle exceptions as needed
+        return jsonify({"error": str(e)}), 500
 
 
 # Register blueprints
