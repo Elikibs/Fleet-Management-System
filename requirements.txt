@@ -14,3 +14,4 @@ gunicorn
 python-dotenv
 flask-cors
 flask_jwt_extended
+marshmallow
