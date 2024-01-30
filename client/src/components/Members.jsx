@@ -8,7 +8,7 @@ export default function Members({ accessToken }) {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    fetch('/users/all', {
+    fetch('https://fleetsense.onrender.com/users/all', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
