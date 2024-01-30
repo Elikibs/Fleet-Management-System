@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt, current_user, get_jwt_identity
 from flask_cors import CORS
+from dotenv import load_dotenv
+load_dotenv()
 from models import db, User, TokenBlocklist, Route, Matatu
 from schemas import UserSchema, RouteSchema, MatatuSchema
 
