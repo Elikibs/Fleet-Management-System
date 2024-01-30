@@ -21,7 +21,7 @@ export default function Matatus({ handleDeleteMatatu }) {
   const fetchMatatus = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.get('/matatus/allmatatus', {
+      const response = await axios.get('https://fleetsense.onrender.com/matatus/allmatatus', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

@@ -27,7 +27,7 @@ export default function Register() {
         alert('Invalid username. Please choose a different username.');
         return;
       }
-        const response = await axios.post('/auth/register', {
+        const response = await axios.post('https://fleetsense.onrender.com/auth/register', {
           username,
           email,
           password,

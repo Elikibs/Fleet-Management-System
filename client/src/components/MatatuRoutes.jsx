@@ -14,7 +14,7 @@ export default function MatatuRoutes({ accessToken }) {
 
   const handleAddRoute = async (newRoute) => {
     try {
-      const response = await fetch('/routes/add', {
+      const response = await fetch('https://fleetsense.onrender.com/routes/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export default function MatatuRoutes({ accessToken }) {
   const handleDeleteRoute = async (id) => {
     try {
       // Delete the route from the backend
-      const response = await fetch(`/routes/delete/${id}`, {
+      const response = await fetch(`https://fleetsense.onrender.com/routes/delete/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${accessToken}` }
       });
@@ -58,7 +58,7 @@ export default function MatatuRoutes({ accessToken }) {
 
   useEffect(() => {
     // Fetch routes when the component mounts
-    fetch('/routes/allroutes', {
+    fetch('https://fleetsense.onrender.com/routes/allroutes', {
       headers: { Authorization: `Bearer ${accessToken}` }
     })
       .then((r) => r.json())
