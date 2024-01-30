@@ -2,10 +2,17 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt, current_user, get_jwt_identity
 from flask_cors import CORS
+from dotenv import load_dotenv
+load_dotenv()
 from models import db, User, TokenBlocklist, Route, Matatu
 from schemas import UserSchema, RouteSchema, MatatuSchema
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='../client/build',
+    template_folder='../client/build'
+)
 app.secret_key = 'b33b151adaccb5d08c9eb0c0'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fleets.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
